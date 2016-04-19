@@ -1,17 +1,27 @@
 'use strict'
 
-import config from 'express'
+import path from 'path'
+import config from 'config'
 import express from 'express'
-import bodyParser from 'bodyParser'
+import bodyParser from 'body-parser'
 import api from './routes'
 
 const app = express()
-const PORT = config.port
+const PORT = process.env.PORT || 8000
+const PUBLIC_DIR = path.join(__dirname, 'public')
 
-// Here's where the magic happens. Any middleware after this have access to
-// `req.body` for those requests that come through as `json` bodies with the
-// `Content-Type: application/json` header
 app.use(bodyParser.json())
 app.use('/api', api)
+app.use(express.static(PUBLIC_DIR))
 
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`))
+app.use((err, req, res, next) => {
+  res.status(500).json({
+    error: err.message
+  })
+})
+
+app.listen(PORT, () => {
+  console.log(`server started on port ${PORT}`)
+})
+
+export default app

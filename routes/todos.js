@@ -6,7 +6,8 @@ import Todo from '../lib/todo'
 const { Router } = express
 const todosRouter = new Router()
 
-
+// GET /api/todos
+// Retrieves all todos
 todosRouter.get('/', (req, res, next) => {
   Todo.find((err, todos) => {
     if (err) return next(err)
@@ -14,7 +15,12 @@ todosRouter.get('/', (req, res, next) => {
   })
 })
 
-
+// POST /api/todos
+// Creates a new todo. Example body:
+// {
+//   "name": "{todo name}",
+//   "completed": false
+// }
 todosRouter.post('/', (req, res, next) => {
   Todo.create(req.body, (err, todo) => {
     if (err) return next(err)
