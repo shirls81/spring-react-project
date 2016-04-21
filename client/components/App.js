@@ -3,13 +3,15 @@
 import React from 'react'
 import AddTodoContainer from '../containers/AddTodoContainer'
 import FilteredTodoList from '../containers/FilteredTodoList'
-import Filters from './Filters' // Add this here, and add it into the render function
+import Filters from './Filters'
+import styles from './App.css' // Add this import
 
 class App extends React.Component {
 
   render() {
+    // Add the app className
     return (
-      <div>
+      <div className={styles.app}>
         <AddTodoContainer />
         <Filters />
         <FilteredTodoList />

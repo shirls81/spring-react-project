@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import styles from './AddTodo.css' // Import the styles
 
 class AddTodo extends React.Component {
 
@@ -15,10 +16,12 @@ class AddTodo extends React.Component {
   }
 
   render() {
+    // Add the classNames (I also added placeholder text to the input and
+    // changed the Submit Button text)
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input ref="input" />
-        <button>Add Todo</button>
+      <form className={styles.form} onSubmit={this.handleSubmit}>
+        <input className={styles.input} ref="input" placeholder="What needs to get done?" />
+        <button className={styles.submit}>Add Todo</button>
       </form>
     )
   }

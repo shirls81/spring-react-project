@@ -1,18 +1,16 @@
 import React from 'react'
+import styles from './Todo.css'
 
 const Todo = (props) => {
-  var styles = {
-    textDecoration: props.completed ? 'line-through' : 'none',
-    cursor: 'pointer'
-  }
-  // We're going to add a delete button and also allow a `onDeleteClick` prop
+
+  const todoClasses = [ styles.todo ]
+  if (props.completed) todoClasses.push(styles.completed)
+
   return (
-    <div>
-      <span style={styles} onClick={props.onClick}>{props.name}</span>
+    <div className={todoClasses.join(' ')}>
+      <span className={styles.todoText} onClick={props.onClick}>{props.name}</span>
       &nbsp;
-      <button onClick={props.onDeleteClick}>X</button>
+      <button className={styles.deleteButton} onClick={props.onDeleteClick}>X</button>
     </div>
   )
 }
-
-export default Todo
