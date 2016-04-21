@@ -4,11 +4,12 @@
   "description": "Spring class tutorial",
   "main": "index.js",
   "scripts": {
+    "build": "NODE_ENV=production webpack",
     "build-watch": "webpack-dev-server --inline --content-base public/",
     "build": "webpack",
     "start": "node init",
     "watch": "nodemon init",
-    "test": "mocha",
+    "test": "NODE_ENV=test mocha",
     "all": "npm run watch & npm run build-watch"
   },
   "author": "Shirley Ashby",
@@ -21,6 +22,7 @@
     "body-parser": "^1.15.0",
     "config": "^1.20.1",
     "express": "^4.13.4",
+    "mongoose": "^4.4.12",
     "react-redux": "^4.4.5",
     "redux": "^3.4.0",
     "redux-thunk": "^2.0.1"
@@ -30,12 +32,14 @@
     "babel-register": "^6.7.2",
     "bluebird": "^3.3.5",
     "chai": "^3.5.0",
+    "envify": "^3.4.0",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
     "react": "^15.0.1",
     "react-dom": "^15.0.1",
     "supertest": "^1.2.0",
     "supertest-as-promised": "^3.1.0",
+    "transform-loader": "^0.2.3",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   }

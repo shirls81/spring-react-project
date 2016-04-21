@@ -29670,7 +29670,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.createTodo = undefined;
+	exports.clearCompletedTodos = exports.deleteTodo = exports.updateTodo = exports.listTodos = exports.createTodo = undefined;
 
 	var _axios = __webpack_require__(491);
 
@@ -29709,6 +29709,109 @@
 	      dispatch(createTodoSuccess(response.data));
 	    }).catch(function (response) {
 	      dispatch(createTodoFailure(response.data));
+	    });
+	  };
+	};
+
+	// content from above...
+
+	var listTodosRequest = function listTodosRequest() {
+	  return {
+	    type: 'TODO_LIST_REQUEST'
+	  };
+	};
+	var listTodosSuccess = function listTodosSuccess(todos) {
+	  return {
+	    type: 'TODO_LIST_SUCCESS',
+	    payload: todos
+	  };
+	};
+	var listTodosFailure = function listTodosFailure(err) {
+	  return {
+	    type: 'TODO_LIST_FAILURE',
+	    payload: err,
+	    error: true
+	  };
+	};
+
+	var listTodos = exports.listTodos = function listTodos() {
+	  return function (dispatch) {
+	    dispatch(listTodosRequest());
+	    _axios2.default.get('/api/todos').then(function (response) {
+	      dispatch(listTodosSuccess(response.data));
+	    }).catch(function (response) {
+	      dispatch(listTodosFailure(response.data));
+	    });
+	  };
+	};
+
+	var updateTodoRequest = function updateTodoRequest(id, partial) {
+	  return {
+	    type: 'TODO_UPDATE_REQUEST',
+	    payload: { id: id, partial: partial }
+	  };
+	};
+	var updateTodoSuccess = function updateTodoSuccess(todo) {
+	  return {
+	    type: 'TODO_UPDATE_SUCCESS',
+	    payload: todo
+	  };
+	};
+	var updateTodoFailure = function updateTodoFailure(err) {
+	  return {
+	    type: 'TODO_UPDATE_FAILURE',
+	    payload: err,
+	    error: true
+	  };
+	};
+
+	var updateTodo = exports.updateTodo = function updateTodo(id, update) {
+	  return function (dispatch) {
+	    dispatch(updateTodoRequest(id, update));
+	    _axios2.default.put('/api/todos/' + id, update).then(function (response) {
+	      dispatch(updateTodoSuccess(response.data));
+	    }).catch(function (response) {
+	      dispatch(updateTodoFailure(response.data));
+	    });
+	  };
+	};
+
+	var deleteTodoRequest = function deleteTodoRequest(id) {
+	  return {
+	    type: 'TODO_DELETE_REQUEST',
+	    payload: id
+	  };
+	};
+	var deleteTodoSuccess = function deleteTodoSuccess(id) {
+	  return {
+	    type: 'TODO_DELETE_SUCCESS',
+	    payload: id
+	  };
+	};
+	var deleteTodoFailure = function deleteTodoFailure(data) {
+	  return {
+	    type: 'TODO_DELETE_FAILURE',
+	    payload: data,
+	    error: true
+	  };
+	};
+
+	var deleteTodo = exports.deleteTodo = function deleteTodo(id) {
+	  return function (dispatch) {
+	    dispatch(deleteTodoRequest(id));
+	    _axios2.default.delete('/api/todos/' + id).then(function (response) {
+	      dispatch(deleteTodoSuccess(id));
+	    }).catch(function (response) {
+	      dispatch(deleteTodoFailure(response.data));
+	    });
+	  };
+	};
+
+	var clearCompletedTodos = exports.clearCompletedTodos = function clearCompletedTodos(todos) {
+	  return function (dispatch) {
+	    todos.forEach(function (todo) {
+	      if (!todo.completed) return;
+	      todoDelete(todo.id)(dispatch);
 	    });
 	  };
 	};
